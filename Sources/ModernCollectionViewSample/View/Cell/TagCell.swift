@@ -29,6 +29,8 @@ public class TagCell: UICollectionViewCell {
 public extension TagCell {
     func setup() {
         backgroundColor = .lightGray
+        layer.cornerRadius = 5
+        layer.masksToBounds = true
     }
 
     func configure(tag: Tag) {
