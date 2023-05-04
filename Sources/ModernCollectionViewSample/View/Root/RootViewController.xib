@@ -16,29 +16,42 @@
                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="aw2-gO-0oT">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="rnL-aP-9Df">
                         <rect key="frame" x="0.0" y="59" width="393" height="793"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Jdd-oF-lJ7">
-                            <size key="itemSize" width="128" height="128"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                    </collectionView>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="o9Y-lV-8LI">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="nGI-Wh-f8f" id="CvZ-F8-APc"/>
+                                </connections>
+                            </searchBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="aw2-gO-0oT">
+                                <rect key="frame" x="0.0" y="56" width="393" height="737"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Jdd-oF-lJ7">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                            </collectionView>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <viewLayoutGuide key="safeArea" id="ebX-Vp-bIX"/>
                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="aw2-gO-0oT" secondAttribute="bottom" id="4EJ-DG-laL"/>
-                    <constraint firstItem="aw2-gO-0oT" firstAttribute="top" secondItem="ebX-Vp-bIX" secondAttribute="top" id="G6I-ye-VvP"/>
-                    <constraint firstItem="ebX-Vp-bIX" firstAttribute="trailing" secondItem="aw2-gO-0oT" secondAttribute="trailing" id="MoU-so-IeW"/>
-                    <constraint firstItem="aw2-gO-0oT" firstAttribute="leading" secondItem="ebX-Vp-bIX" secondAttribute="leading" id="zLX-2G-ZlE"/>
+                    <constraint firstAttribute="bottom" secondItem="rnL-aP-9Df" secondAttribute="bottom" id="OMz-9w-gBI"/>
+                    <constraint firstItem="rnL-aP-9Df" firstAttribute="top" secondItem="ebX-Vp-bIX" secondAttribute="top" id="nWa-XQ-CWp"/>
+                    <constraint firstAttribute="trailing" secondItem="rnL-aP-9Df" secondAttribute="trailing" id="qQ7-EU-XRC"/>
+                    <constraint firstItem="rnL-aP-9Df" firstAttribute="leading" secondItem="ebX-Vp-bIX" secondAttribute="leading" id="qX3-mg-24R"/>
                 </constraints>
             </view>
             <navigationItem key="navigationItem" title="Modern CollectionView" id="nZa-c0-a5m"/>
             <connections>
                 <outlet property="collectionView" destination="aw2-gO-0oT" id="0lj-si-PVf"/>
+                <outlet property="searchBar" destination="o9Y-lV-8LI" id="tn8-zB-McI"/>
             </connections>
             <point key="canvasLocation" x="-401" y="-8"/>
         </viewController>

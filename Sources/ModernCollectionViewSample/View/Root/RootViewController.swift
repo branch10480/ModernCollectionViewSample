@@ -1,52 +1,56 @@
-//
-//  RootViewController.swift
-//  
-//
-//  Created by Toshiharu Imaeda on 2023/05/03.
-//
-
 import UIKit
+import Combine
 
 public class RootViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
+
+    private var cancellables = Set<AnyCancellable>()
 
     private enum Section {
         case main
     }
 
+    private var data: [Tag] = []
     private var dataSource: UICollectionViewDiffableDataSource<Section, Tag>!
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-
         setup()
+
+        // Initial display
+        search(keyword: nil)
     }
 }
 
 private extension RootViewController {
     func setup() {
+        setObserver()
         collectionView.collectionViewLayout = createLayout()
         configureDataSrouce()
         setupData()
     }
 
+    func setObserver() {
+        searchBar.delegate = self
+    }
+
     func setupData() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Tag>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(Array<Int>(0..<94).map{ Tag(id: $0.description, name: $0.description) })
-        dataSource.apply(snapshot)
+        data = Array<Int>(0..<94).map{ Tag(id: $0.description, name: $0.description) }
     }
 
     func createLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(5), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: 5, leading: 5, bottom: 5, trailing: 5)
 
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.interItemSpacing = .fixed(16)
 
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
+        section.interGroupSpacing = 16
+
         return UICollectionViewCompositionalLayout(section: section)
     }
 
@@ -59,5 +63,28 @@ private extension RootViewController {
             let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
             return cell
         })
+    }
+
+    func search(keyword: String?) {
+        var result = data
+        if let keyword, !keyword.isEmpty {
+            result = data.filter { $0.name.contains(keyword) }
+        }
+
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Tag>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(result)
+        dataSource.apply(snapshot)
+    }
+}
+
+// MARK: - UISearchBarDelegate
+extension RootViewController: UISearchBarDelegate {
+    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        search(keyword: searchText)
+    }
+
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
