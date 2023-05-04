@@ -2,7 +2,6 @@ import UIKit
 
 public class SelectedTagCollectionView: UICollectionView {
     public var didSelectTag: ((Tag) -> Void)?
-    public var didDeselectTag: ((Tag) -> Void)?
 
     private var diffableDataSource: UICollectionViewDiffableDataSource<Section, Tag>!
 
@@ -18,6 +17,7 @@ public class SelectedTagCollectionView: UICollectionView {
 
     public required init?(coder: NSCoder) {
         super.init(coder: coder)
+        delegate = self
         collectionViewLayout = createLayout()
         configureDataSrouce()
     }
@@ -57,5 +57,12 @@ private extension SelectedTagCollectionView {
             let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
             return cell
         })
+    }
+}
+
+extension SelectedTagCollectionView: UICollectionViewDelegate {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let tag = diffableDataSource.snapshot().itemIdentifiers[indexPath.row]
+        didSelectTag?(tag)
     }
 }

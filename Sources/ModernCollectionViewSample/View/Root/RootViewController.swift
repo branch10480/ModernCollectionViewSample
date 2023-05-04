@@ -46,6 +46,13 @@ private extension RootViewController {
             data.remove(tag)
             collectionViewForSelectedTags.data = data
         }
+
+        collectionViewForSelectedTags.didSelectTag = { [weak self] tag in
+            guard let self else { return }
+            let data = NSMutableOrderedSet(orderedSet: collectionViewForSelectedTags.data)
+            data.remove(tag)
+            collectionViewForSelectedTags.data = data
+        }
     }
 
     func setupData() {

@@ -18,6 +18,7 @@ public class TagCollectionView: UICollectionView {
 
     public required init?(coder: NSCoder) {
         super.init(coder: coder)
+        allowsMultipleSelection = true
         delegate = self
         collectionViewLayout = createLayout()
         configureDataSrouce()
@@ -63,5 +64,10 @@ extension TagCollectionView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let tag = diffableDataSource.snapshot().itemIdentifiers[indexPath.row]
         didSelectTag?(tag)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let tag = diffableDataSource.snapshot().itemIdentifiers[indexPath.row]
+        didDeselectTag?(tag)
     }
 }
