@@ -3,6 +3,7 @@ import Combine
 
 public class RootViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionViewForSelectedTags: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
 
     private var cancellables = Set<AnyCancellable>()
